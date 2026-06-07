@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Royal Feast — Fine Dining</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #9A7A2E;
+    --black: #0A0A0A;
+    --charcoal: #111111;
+    --zinc: #1A1A1A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', sans-serif; background: var(--black); color: #e8e0d0; overflow-x: hidden; }
+  h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 0 2.5rem; transition: all .4s; }
+  nav.scrolled { background: rgba(10,10,10,.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,.25); }
+  .nav-inner { max-width: 1280px; margin: auto; display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 0; }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; color: var(--gold); letter-spacing: .08em; text-decoration: none; }
+  .logo span { font-style: italic; font-weight: 300; }
+  .nav-links a { color: #c8bfaf; text-decoration: none; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 500; margin-left: 2.2rem; transition: color .3s; padding-bottom: 4px; border-bottom: 1px solid transparent; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* HERO */
+  .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1800'); background-size: cover; background-position: center; filter: brightness(.35); transform: scale(1.05); animation: zoomOut 12s ease-out forwards; }
+  @keyframes zoomOut { from { transform: scale(1.1); } to { transform: scale(1); } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,10,10,.2) 0%, rgba(10,10,10,.6) 100%); }
+  .hero-content { position: relative; text-align: center; padding: 2rem; animation: fadeUp .9s ease both; animation-delay: .3s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-eyebrow { font-size: .68rem; letter-spacing: .38em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; display: block; }
+  .hero-title { font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 300; line-height: 1.05; color: #f5eed8; margin-bottom: 1.2rem; }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-sub { font-size: .82rem; letter-spacing: .22em; text-transform: uppercase; color: #a89a80; margin-bottom: 2.8rem; }
+  .divider { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 1.8rem auto; }
+  .btn-gold { display: inline-block; padding: .85rem 2.6rem; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 500; transition: all .35s; }
+  .btn-gold:hover { background: var(--gold); color: #000; }
+  .btn-solid { display: inline-block; padding: .85rem 2.6rem; background: var(--gold); color: #000; text-decoration: none; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; transition: all .35s; margin-left: 1rem; }
+  .btn-solid:hover { background: var(--gold-light); }
+
+  /* SECTIONS */
+  section { padding: 7rem 2rem; }
+  .section-inner { max-width: 1280px; margin: auto; }
+  .section-label { font-size: .65rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; display: block; }
+  .section-title { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 300; color: #f0e8d5; line-height: 1.15; }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+
+  /* FEATURE CARDS */
+  .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 4rem; }
+  .feature-card { background: var(--zinc); padding: 3rem 2.5rem; border-top: 2px solid transparent; transition: border-color .4s, background .4s; }
+  .feature-card:hover { border-top-color: var(--gold); background: #1f1f1f; }
+  .feature-num { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; color: rgba(201,168,76,.15); line-height: 1; margin-bottom: 1rem; }
+  .feature-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: var(--gold-light); margin-bottom: .8rem; }
+  .feature-text { font-size: .8rem; line-height: 1.9; color: #857a6a; letter-spacing: .03em; }
+
+  /* MENU PREVIEW */
+  .menu-preview { background: var(--charcoal); }
+  .dish-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
+  .dish-card { background: var(--zinc); overflow: hidden; }
+  .dish-img { width: 100%; height: 220px; object-fit: cover; display: block; transition: transform .6s ease; }
+  .dish-card:hover .dish-img { transform: scale(1.07); }
+  .dish-info { padding: 1.4rem 1.6rem; }
+  .dish-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: #f0e8d5; margin-bottom: .3rem; }
+  .dish-desc { font-size: .75rem; color: #7a6e5e; letter-spacing: .04em; line-height: 1.7; margin-bottom: .8rem; }
+  .dish-price { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); }
+
+  /* QUOTE */
+  .quote-section { background: var(--black); text-align: center; }
+  .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-style: italic; font-weight: 300; color: #d8cdb8; line-height: 1.5; max-width: 800px; margin: auto; }
+  .quote-author { font-size: .68rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-top: 1.8rem; }
+
+  /* FOOTER */
+  footer { background: #080808; border-top: 1px solid rgba(201,168,76,.15); padding: 4rem 2rem 2rem; }
+  .footer-inner { max-width: 1280px; margin: auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; color: var(--gold); margin-bottom: .8rem; }
+  .footer-tagline { font-size: .76rem; color: #5a5040; letter-spacing: .08em; line-height: 1.8; }
+  .footer-col h4 { font-size: .65rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .footer-col a, .footer-col p { display: block; font-size: .78rem; color: #6a5e4e; text-decoration: none; margin-bottom: .6rem; transition: color .3s; letter-spacing: .04em; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,.05); padding-top: 1.5rem; font-size: .68rem; color: #3a3028; letter-spacing: .08em; display: flex; justify-content: space-between; }
+
+  @media(max-width:768px) {
+    .feature-grid, .dish-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Royal <span>Feast</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="menu.html">Menu</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="chef.html">Chef</a>
+      <a href="reservation.html">Reservations</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Est. 2008 · Sambhajinagar</span>
+    <h1 class="hero-title">Where Every<br><em>Meal Becomes</em><br>A Memory</h1>
+    <div class="divider"></div>
+    <p class="hero-sub">Fine Dining · Curated Experiences · Timeless Flavours</p>
+    <a href="reservation.html" class="btn-gold">Reserve a Table</a>
+    <a href="menu.html" class="btn-solid">View Menu</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="background:var(--charcoal);">
+  <div class="section-inner">
+    <span class="section-label">Why Royal Feast</span>
+    <h2 class="section-title">An Experience<br><em>Beyond the Plate</em></h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-num">01</div>
+        <div class="feature-title">Artisan Cuisine</div>
+        <p class="feature-text">Each dish is meticulously crafted using rare ingredients sourced from local farms and international purveyors, blending classical technique with modern imagination.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-num">02</div>
+        <div class="feature-title">Curated Ambience</div>
+        <p class="feature-text">Our dining room is a sanctuary — warm candlelight, hand-selected décor, and acoustics designed to invite conversation and quiet celebration alike.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-num">03</div>
+        <div class="feature-title">Impeccable Service</div>
+        <p class="feature-text">Every guest is treated as a cherished member of the Royal Feast family. Our team anticipates your needs before you voice them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU PREVIEW -->
+<section class="menu-preview">
+  <div class="section-inner">
+    <span class="section-label">Signature Dishes</span>
+    <h2 class="section-title">A Taste of<br><em>Our Finest</em></h2>
+    <div class="dish-grid">
+      <div class="dish-card">
+        <div style="overflow:hidden"><img class="dish-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600" alt="Lamb Rack"></div>
+        <div class="dish-info">
+          <div class="dish-name">Herb-Crusted Lamb Rack</div>
+          <p class="dish-desc">Rosemary jus, pommes dauphine, seasonal greens</p>
+          <div class="dish-price">₹ 1,850</div>
+        </div>
+      </div>
+      <div class="dish-card">
+        <div style="overflow:hidden"><img class="dish-img" src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=600" alt="Truffle Risotto"></div>
+        <div class="dish-info">
+          <div class="dish-name">Black Truffle Risotto</div>
+          <p class="dish-desc">Aged parmesan, wild mushroom medley, gold flake</p>
+          <div class="dish-price">₹ 1,400</div>
+        </div>
+      </div>
+      <div class="dish-card">
+        <div style="overflow:hidden"><img class="dish-img" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=600" alt="Lobster Bisque"></div>
+        <div class="dish-info">
+          <div class="dish-name">Royal Lobster Bisque</div>
+          <p class="dish-desc">Cognac cream, chive oil, sourdough croutons</p>
+          <div class="dish-price">₹ 1,100</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:3rem">
+      <a href="menu.html" class="btn-gold">Explore Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <p class="quote-text">"Dining is and always was a great artistic opportunity — to bring beauty, flavour, and human warmth to a single shared moment."</p>
+    <p class="quote-author">— Chef Arjun Mehta, Executive Chef</p>
+    <div class="divider"></div>
+    <div style="margin-top:2.5rem">
+      <a href="reservation.html" class="btn-gold">Book Your Evening</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Royal Feast</div>
+        <p class="footer-tagline">A sanctuary of fine dining, curated flavours, and memories that linger long after the last bite. Est. 2008, Sambhajinagar.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="about.html">About Us</a>
+        <a href="menu.html">Our Menu</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="chef.html">The Chef</a>
+      </div>
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <p>12, Palace Road</p>
+        <p>Sambhajinagar, MH</p>
+        <p>431001</p>
+        <p style="margin-top:.5rem">Tue – Sun</p>
+        <p>12pm – 11pm</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+919876543210">+91 98765 43210</a>
+        <a href="mailto:info@royalfeast.com">info@royalfeast.com</a>
+        <a href="reservation.html" style="margin-top:.8rem;color:var(--gold)">Reserve a Table →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Royal Feast Restaurant. All rights reserved.</span>
+      <span>Crafted with excellence.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+</script>
+</body>
+</html>
